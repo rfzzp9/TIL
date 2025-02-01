@@ -69,5 +69,5 @@
 - 반환 값 : 객체 자체
 
 
-### 1-8. Scope Function의 각 함수별 사용하기 적절한 상황
+### 1-7. Scope Function의 각 함수별 사용하기 적절한 상황
 ![image](https://github.com/user-attachments/assets/4de90f58-c5f7-492f-b74c-da85a626cf7a)
