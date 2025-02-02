@@ -32,5 +32,20 @@ fun main() {
 
 
 - Kotlin에서는 static 키워드가 없기 때문에, 클래스 내부에서 정적 멤버(Static Member)처럼 사용할 수 있는 객체를 만들고 싶을 때 Companion Object를 사용한다.
-- 클래스 이름을 통해 직접 접근 가능하다.
-- 
+- 클래스 내부에 하나만 생성할 수 있고, 클래스 이름을 통해 직접 접근 가능하다.
+- 객체 생성 없이 바로 사용할 수 있다.
+```kotlin
+fun main() {
+    println(Book.NAME)
+    println(Book.AGE)
+    Book.create()
+}
+
+class Book {
+    companion object {
+        val NAME = "hello"
+        const val AGE = 25
+        fun create() = Book()
+    }
+}
+```
