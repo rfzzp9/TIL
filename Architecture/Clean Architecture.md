@@ -69,7 +69,7 @@ fun main() {
     println(user)
 }
 ```
-
+<br>
 
 ## 2. Android 앱에서의 Clean Architecture
 
