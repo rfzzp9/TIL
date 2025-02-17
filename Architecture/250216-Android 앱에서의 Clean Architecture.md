@@ -77,7 +77,4 @@ fun main() {
 ### 2-1. Clean Architecture
 
 
-- 아래의 그림은 Clean Architecture Layer이다.
-![image](https://github.com/user-attachments/assets/21e55f63-0c6c-4c38-8cf4-f89b92291132)
-- 엔티티(Entities)
-  - 
+- Android에서는 
