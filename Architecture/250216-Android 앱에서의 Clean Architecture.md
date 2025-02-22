@@ -77,4 +77,4 @@ fun main() {
 ### 2-1. Clean Architecture
 
 
-- Android에서는 
+- 
