@@ -102,5 +102,13 @@ fun main() {
    - Domain Layer에 해당하는 모듈은 다음과 같다.
      - UseCase
    - 복잡한 비즈니스 로직이나 여러 ViewModel에서 재사용되는 간단한 비즈니스 로직의 캡슐화를 담당한다.
-3) 
-5) 
+   ![image](https://github.com/user-attachments/assets/707d15ac-b99b-44a8-9878-939a58fae8ef)
+3) Data Layer
+   - Data Layer에는 2가지 모듈이 포함되어 있다.
+     - Repository
+     - DataSource
+   - 앱의 데이터 생성, 저장, 변경 방식을 결정하는 규칙으로 구성된다.
+   - Data Layer는 앱에서 처리하는 다양한 유형의 데이터별로 저장소 클래스를 만들어야 한다.
+   - 저장소 클래스에서는 비즈니스 로직 포함, 앱의 나머지 부분에서 데이터 소스 추상화, 여러 데이터 간의 충돌 해결, 데이터 변경사항을 한 곳에 집중, 앱의 나머지 부분에 데이터 노출 작업을 담당한다.
+   ![image](https://github.com/user-attachments/assets/ef0a334f-ce7e-4ed4-a6d5-cbcb192c3232)
+
