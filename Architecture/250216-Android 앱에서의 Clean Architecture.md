@@ -77,5 +77,30 @@ fun main() {
 ### 2-1. Clean Architecture
 
 
-- 
+#### 관심사의 분리
+
+
+- 관심사의 분리란 각 기능(관심사)을 독립적인 모듈로 나누어, 서로 영향을 최소화하고 유지보수를 쉽게 하는 것을 목표로 한다.
+
+
+#### Clean Architecture의 계층 구조
+
+
+- Android 앱 Architecture에는 3가지 레이어가 존재하며 이들은 각각의 '책임'을 명확히 가진다.
+- UI Layer, Domain Layer, Data Layer로 구성된다.
+- 아래 다이어그램의 화살표는 클래스 간의 종속성을 나타낸다.
 ![image](https://github.com/user-attachments/assets/026bad3c-5682-452a-84d8-f5b2bebd79e3)
+1) UI Layer (Presentation Layer)
+   - UI Layer에 해당하는 모듈은 다음과 같다.
+     - Activity, Fragment + XML View, ComposeUI
+     - ViewModel
+   - ViewModel은 UI에 바인딩되는 데이터를 보유하고 이를 UI에 노출하며 로직을 처리하는 모듈이다. <br>
+   ![image](https://github.com/user-attachments/assets/c83faf4e-92f0-4225-9280-365161c1a934)
+
+2) Domain Layer
+   - Domain Layer는 UI Layer와 Data Layer 사이에 있는 선택적 레이어이다.
+   - Domain Layer에 해당하는 모듈은 다음과 같다.
+     - UseCase
+   - 복잡한 비즈니스 로직이나 여러 ViewModel에서 재사용되는 간단한 비즈니스 로직의 캡슐화를 담당한다.
+3) 
+5) 
