@@ -1,4 +1,4 @@
-## 1. Clean Arichitecture 요약_대출 앱을 통해 구조 파악하기
+## 1. Clean Arichitecture 요약(입문용)_대출 앱을 통해 구조 파악하기
 
 
 ### 1-1. 대출 앱 계층
