@@ -119,8 +119,7 @@ class MemoActivity: AppCompatActivity() {
 ```
 <br>
 
-여기까지 했다면, Activity에 MemoRepository 객체 주입을 위한 기반 작업은 완료되었다.
-이제 MemoRepository를 생성하기 위한 매개변수인 데이터베이스만 제공해주면 된다.
+여기까지 했다면, Activity에 MemoRepository 객체 주입을 위한 기반 작업은 완료되었다. <br> 이제 MemoRepository를 생성하기 위한 매개변수인 데이터베이스만 제공해주면 된다.
 
 ```kotlin
 /*
