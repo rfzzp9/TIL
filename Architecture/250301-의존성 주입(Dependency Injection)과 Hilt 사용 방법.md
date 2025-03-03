@@ -101,6 +101,9 @@ fun main() {
 ### 2-5. Hilt 사용법
 
 
+##### [Hilt 사용법 part 1]
+
+
 ![image](https://github.com/user-attachments/assets/5ede635b-6763-4536-a446-9ffe030285b3)
 - Application 클래스에 @HiltAndroidApp 어노테이션 지정
   - 반드시 @HiltAndroidApp 어노테이션이 지정된 Application 클래스가 있어야 한다.
