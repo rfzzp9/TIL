@@ -82,6 +82,36 @@ fun main() {
 - AndroidX 라이브러리와 호환된다.
 
 
+### 2-4. Hilt의 주요 구성 요소
+
+
+- Application
+  - @HiltAndroidApp
+- ViewModel
+  - @HiltViewModel
+- Activity
+  - @AndroidEntryPoint
+- Fragment
+  - @AndroidEntryPoint
+- View
+- Service
+- BroadcastReceiver
+
+
+### 2-5. Hilt 사용법
+
+
+![image](https://github.com/user-attachments/assets/5ede635b-6763-4536-a446-9ffe030285b3)
+- Application 클래스에 @HiltAndroidApp 어노테이션 지정
+  - 반드시 @HiltAndroidApp 어노테이션이 지정된 Application 클래스가 있어야 한다.
+  - @HiltAndroidApp 어노테이션은 모든 의존성 주입의 시작점이다.
+- MainViewModel 클래스와 RemoteRepository 클래스에 @Inject 어노테이션을 지정
+  - MainActivity에서 MainViewModel을 주입받고 MainViewModel에서는 RemoteRepository를 주입받는다.
+  - MainViewModel과 RemoteRepository를 주입해야 하기 때문에 Hilt에게 이 두 가지 객체 생성 방법을 알려줘야 한다. MainViewModel 클래스와 RemoteRepository 클래스에 @Inject 어노테이션을 지정해주어 Hilt에게 객체를 어떻게 생성하는지 알려줄 수 있다.
+  - @Inject 어노테이션은 객체 생성 뿐만 아니라, 객체 주입 요청의 역할도 있기 때문에 필드에 @Inject 어노테이션이 있을 경우, 해당 객체를 Hilt가 주입해준다.
+
+
+
 ##### [ Hilt를 적용한 코드 ]
 
 
