@@ -136,58 +136,10 @@ fun main() {
     - @InstallIn(ViewModelComponent::class)에 지정된 ViewModelComponent는 Hilt가 ViewModel 생명주기에 맞춰 객체를 유지하도록 하는 범위이다. ViewModelComponent로 지정된 객체(특정 ViewModel이 살아 있는 동안 유지되는 객체)는 해당 ViewModel이 생성되고 삭제될 때까지 유지된다. (해당 코드에서는 ViewModelComponent가 MainViewModel 생명주기에 맞춰 동작하면서 모듈에 주입할 객체를 전달받아서 주입하게 된다.)
     - Hilt의 컴포넌트들은 계층 구조로 되어 있어 상위 계층에 있는 컴포넌트를 통해 주입받을 수도 있다.
     - 위 그림의 우측 표에서는 Hilt의 각 컴포넌트들이 언제 생성되고 언제 사라지는지, 각 Hilt 컴포넌트가 어떤 안드로이드 구성요소를 담당하는지 확인할 수 있다. 상황에 맞는 Component를 찾아서 @InstallIn 어노테이션으로 모듈을 연결하면 된다.
-
-##### [ Hilt를 적용한 코드 ]
-
-
-```kotlin
-//@inject 어노테이션은 의존성 주입 받음을 의미
-class MemoRepository @inject constructor(private val db: MemoDatabase) {
-  fun load(id: String) { ... }
-}
-```
-```kotlin
-/*
-- Hilt 사용시 선행되어야 하는 부분
-- @HiltAndroidApp 어노테이션은 모든 의존성 주입의 시작점
-*/
-@HiltAndroidApp
-class MemoApp: Application()
-```
-
-```kotlin
-/*
-- @AndroidEntryPoint 어노테이션은 Activity와 같은 Android 클래스에 추가할 수 있음
-- @AndroidEntryPoint 어노테이션은 Activity 내에 선언된 @Inject 어노테이션이 달린 변수에
-  대해 의존성 주입을 수행함
-*/
-@AndroidEntryPoint
-class MemoActivity: AppCompatActivity() {
-
-  @inject lateinit var repository: MemoRepository
-
-  override fun onCreate(savedInstanceState: Bundle) {
-    super.onCreate(Bundle)
-    repository.load("YHLQMDLG")
-  }
-}
-```
 <br>
 
-여기까지 했다면, Activity에 MemoRepository 객체 주입을 위한 기반 작업은 완료되었다. <br> 이제 MemoRepository를 생성하기 위한 매개변수인 데이터베이스만 제공해주면 된다.
+##### [Hilt 사용법 part 3]
 
-```kotlin
-/*
-- @Module 어노테이션이 달린 모듈 클래스에 @InstallIn 어노테이션을 추가함
-- 모듈 클래스 내에 데이터베이스 객체를 생성하는 Provide 메서드를 생성하면 모든 작업이 끝나고
-  MemoActivity에서 MemoRepository를 주입 받을 수 있게 됨
-*/
-@InstallIn(ApplicationComponent::class)
-@Module
-object DataModule {
 
-  @Provides
-  fun provideMemoDB(@ApplicationContext context: Context)=
-    Room.databaseBuilder(context, MemoDatabase::class.java, "Memo.db").build()
-}
-```
+![image](https://github.com/user-attachments/assets/b5fd6d1b-a3b4-47a5-a796-2924318432f9)
+- 12분 45초부터
