@@ -124,10 +124,9 @@ fun main() {
 
 
 ![image](https://github.com/user-attachments/assets/393e05f4-354e-47eb-9d11-951119282407)
-- Bind Module 정의
-  - Module 사용 이유 : 인터페이스를 기반으로 의존성 주입을 할 때 정의해야 한다. RemoteRepository가 Repository를 구현하지만, Hilt가 이를 자동으로 인식하지 않기 때문에 "RemoteRepository를 Repository의 구현체로 사용해라"라고 알려주기 위해 Bind Module을 사용한다.
+- @Module, @Binds 사용
+  - @Module, @Binds 사용 이유 : @Module 어노테이션은 특정 유형의 객체를 제공하는 방법을 Hilt에게 알려주는 역할을 하며, 의존성을 제공하는 클래스라는 것을 표시한다. 그리고 모듈 내에 @Binds 어노테이션을 사용하는 경우, 인터페이스를 기반으로 의존성 주입을 할 때 정의한다. 해당 코드에서는 RemoteRepository가 Repository를 구현하지만, Hilt가 이를 자동으로 인식하지 않기 때문에 "RemoteRepository를 Repository의 구현체로 사용해라"라고 알려주기 위해 @Binds 어노테이션을 사용한다.
   - 주입할 인터페이스의 구현 클래스를 매개변수로 받고 인터페이스 타입으로 반환하는 추상 메서드를 선언하면 된다. 메서드명은 상관없다.
-  - @Module 어노테이션은 Hilt가 특정 유형의 객체를 제공하는 방법을 알려주는 역할을 하며, 의존성을 제공하는 클래스라는 것을 표시한다.
   - @Binds 어노테이션은 인터페이스와 구현체를 연결하는 역할을 하며, 인터페이스를 구현한 클래스가 어떤 것인지 Hilt에게 알려준다.
   - @Binds 어노테이션은 객체를 직접 생성하지 않고, Hilt가 어떤 구현체를 사용할지만 정의해야 한다. 따라서, 추상 클래스 및 추상 메서드를 사용해야 한다. (@Provides 어노테이션은 객체를 직접 생성할 때 사용하는데, 이 경우 abstract가 필요없다.
   - @InstallIn(ViewModelComponent::class)
@@ -142,4 +141,10 @@ fun main() {
 
 
 ![image](https://github.com/user-attachments/assets/b5fd6d1b-a3b4-47a5-a796-2924318432f9)
-- 12분 45초부터
+- @Module, @Provides 사용
+  - @Module, @Provides 사용 이유 : @Module 어노테이션은 위에서 설명했듯이, 특정 유형의 객체를 제공하는 방법을 Hilt에게 알려주는 역할을 하며, 의존성을 제공하는 클래스라는 것을 표시한다. 그리고 모듈 내에 @Provides 어노테이션은 Hilt에 의존성을 주입하려는 객체가 코드를 수정할 수 없는 클래스(외부 라이브러리) 혹은 Builder 패턴으로 객체를 생성하는 클래스의 경우에 사용한다. 해당 코드에서는 외부 라이브러리 객체를 반환하는데 이는 우리가 직접 수정할 수 없기 때문에 @Inject를 사용하지 않고 @Provides 어노테이션을 사용한다.
+  - 주입할 객체를 생성해서 반환하는 메서드에 @Provides 어노테이션을 지정하면 된다. 메서드명은 상관없다.
+  - @Provides 어노테이션은 우리가 직접 객체를 생성하고, Hilt에게 이를 제공하는 역할을 한다. 그래서 추상 클래스 및 추상 메서드를 사용할 필요는 없다.
+  - @Singleton
+    - Hilt는 기본적으로 객체를 요청할 때마다 새로운 인스턴스를 생성한다. 하지만, @Singleton을 붙이면 한 번만 생성된 객체를 계속 재사용할 수 있다.
+    - 해당 코드의 경우, Hilt는 Retrofit 객체를 한 번만 생성하고, 이후에는 동일한 객체를 재사용한다. 만약 @Singleton 어노테이션이 없을 경우, Retrofit을 요청할 때마다 새로운 객체가 생성되어 메모리 낭비가 발생할 수 있다.
