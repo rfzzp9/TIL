@@ -102,18 +102,18 @@ fun main() {
 
 
 ![image](https://github.com/user-attachments/assets/5ede635b-6763-4536-a446-9ffe030285b3)
-1) Application 클래스에 @HiltAndroidApp 어노테이션 지정
+- Application 클래스에 @HiltAndroidApp 어노테이션 지정
   - 반드시 @HiltAndroidApp 어노테이션이 지정된 Application 클래스가 있어야 한다.
   - @HiltAndroidApp 어노테이션은 모든 의존성 주입의 시작점이다.
-2) MainViewModel 클래스와 RemoteRepository 클래스에 @Inject 어노테이션을 지정
+- MainViewModel 클래스와 RemoteRepository 클래스에 @Inject 어노테이션을 지정
   - MainActivity에서 MainViewModel을 주입받고 MainViewModel에서는 RemoteRepository를 주입받는다.
   - MainViewModel과 RemoteRepository를 주입해야 하기 때문에 Hilt에게 이 두 가지 객체 생성 방법을 알려줘야 한다. MainViewModel 클래스와 RemoteRepository 클래스에 @Inject 어노테이션을 지정해주어 Hilt에게 객체를 어떻게 생성하는지 알려줄 수 있다.
   - @Inject 어노테이션은 객체 생성 뿐만 아니라, 객체 주입 요청의 역할도 있기 때문에 필드에 @Inject 어노테이션이 있을 경우, 해당 객체를 Hilt가 주입해준다.
   - MainViewModel 클래스에서 RemoteRepository 객체 주입을 받고 있지만 @Inject 어노테이션이 없는 이유는 생성자에 한 번만 붙이면, Hilt가 자동으로 remoteRepository를 생성하고 주입하기 때문이다.
-3) MainActivity에서 MainViewModel을 주입받지만, @Inject 어노테이션이 없음
+- MainActivity에서 MainViewModel을 주입받지만, @Inject 어노테이션이 없음
   - Activity나 Fragment 클래스는 안드로이드 시스템의 라이브러리에서 생성하므로 @Inject로 생성자 주입이 불가하다.
   - 대신 @AndroidEntryPoint를 사용하여 Hilt가 관리할 수 있도록 설정하고 ViewModel을 주입할 때에는 by viewModels()을 사용하여 자동으로 주입한다. (viewModel이 아닌 일반 객체를 주입받을 경우 @Inject 어노테이션은 필요하다.)
-4) MainViewModel에 @HiltViewModel 어노테이션, MainActivity에 @AndroidEntryPoint 어노테이션을 지정
+- MainViewModel에 @HiltViewModel 어노테이션, MainActivity에 @AndroidEntryPoint 어노테이션을 지정
   - Hilt에게 각각 viewModel임을 알려주기 위해, 안드로이드 컴포넌트임을 알려주기 위해 지정한다.
 
 
