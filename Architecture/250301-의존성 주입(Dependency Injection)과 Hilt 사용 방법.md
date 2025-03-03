@@ -118,7 +118,24 @@ fun main() {
   - 대신 @AndroidEntryPoint를 사용하여 Hilt가 관리할 수 있도록 설정하고 ViewModel을 주입할 때에는 by viewModels()을 사용하여 자동으로 주입한다. (viewModel이 아닌 일반 객체를 주입받을 경우 @Inject 어노테이션은 필요하다.)
 - MainViewModel에 @HiltViewModel 어노테이션, MainActivity에 @AndroidEntryPoint 어노테이션을 지정
   - Hilt에게 각각 viewModel임을 알려주기 위해, 안드로이드 컴포넌트임을 알려주기 위해 지정한다.
+<br>
 
+##### [Hilt 사용법 part 2]
+
+
+![image](https://github.com/user-attachments/assets/393e05f4-354e-47eb-9d11-951119282407)
+- Bind Module 정의
+  - Module 사용 이유 : 인터페이스를 기반으로 의존성 주입을 할 때 정의해야 한다. RemoteRepository가 Repository를 구현하지만, Hilt가 이를 자동으로 인식하지 않기 때문에 "RemoteRepository를 Repository의 구현체로 사용해라"라고 알려주기 위해 Bind Module을 사용한다.
+  - 주입할 인터페이스의 구현 클래스를 매개변수로 받고 인터페이스 타입으로 반환하는 추상 메서드를 선언하면 된다. 메서드명은 상관없다.
+  - @Module 어노테이션은 Hilt가 특정 유형의 객체를 제공하는 방법을 알려주는 역할을 하며, 의존성을 제공하는 클래스라는 것을 표시한다.
+  - @Binds 어노테이션은 인터페이스와 구현체를 연결하는 역할을 하며, 인터페이스를 구현한 클래스가 어떤 것인지 Hilt에게 알려준다.
+  - @Binds 어노테이션은 객체를 직접 생성하지 않고, Hilt가 어떤 구현체를 사용할지만 정의해야 한다. 따라서, 추상 클래스 및 추상 메서드를 사용해야 한다. (@Provides 어노테이션은 객체를 직접 생성할 때 사용하는데, 이 경우 abstract가 필요없다.
+  - @InstallIn(ViewModelComponent::class)
+    - Hilt에서 의존성을 주입할 범위를 지정하려면 @InstallIn 어노테이션을 사용해야 하는데, 이것을 사용하면 특정 Component에서만 동작하도록 설정할 수 있다. (모듈과 컴포넌트 연결 역할)
+    ![image](https://github.com/user-attachments/assets/5251511e-7d18-44a6-81bf-cbaf2c8bb4bf)
+    - @InstallIn(ViewModelComponent::class)에 지정된 ViewModelComponent는 Hilt가 ViewModel 생명주기에 맞춰 객체를 유지하도록 하는 범위이다. ViewModelComponent로 지정된 객체(특정 ViewModel이 살아 있는 동안 유지되는 객체)는 해당 ViewModel이 생성되고 삭제될 때까지 유지된다. (해당 코드에서는 ViewModelComponent가 MainViewModel 생명주기에 맞춰 동작하면서 모듈에 주입할 객체를 전달받아서 주입하게 된다.)
+    - Hilt의 컴포넌트들은 계층 구조로 되어 있어 상위 계층에 있는 컴포넌트를 통해 주입받을 수도 있다.
+    - 위 그림의 우측 표에서는 Hilt의 각 컴포넌트들이 언제 생성되고 언제 사라지는지, 각 Hilt 컴포넌트가 어떤 안드로이드 구성요소를 담당하는지 확인할 수 있다. 상황에 맞는 Component를 찾아서 @InstallIn 어노테이션으로 모듈을 연결하면 된다.
 
 ##### [ Hilt를 적용한 코드 ]
 
