@@ -60,3 +60,6 @@
 
 - Activity가 완전히 소멸되기 전에 호출된다.
 - finish가 호출되어 종료되거나, 혹은 configurationChange(EX - 기기 회전, 멀티 윈도우)로 인해 일시적으로 소멸될 때 호출된다.
+
+
+
