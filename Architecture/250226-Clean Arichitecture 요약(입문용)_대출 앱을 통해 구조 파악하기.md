@@ -8,7 +8,7 @@
 ![image](https://github.com/user-attachments/assets/5454b110-9fe3-403b-a7cf-7808ea993c38)
 <br>
 
-위의 그림을 코드로 바꾸면 아래와 같이 정의할 수 있다.
+위의 그림을 코드로 바꾸면 아래의 그림과 같이 정의할 수 있다.
 - Presentation 계층에는 대출하기 버튼인 UI와 버튼의 action을 받아주고 Domain과의 번역을 담당하는 Controller가 있다.
 - Domain 계층에는 '대출한다'라는 애플리케이션 비즈니스 룰을 담은 UseCase와 핵심 기능을 가진 엔터프라이즈 비즈니스 룰을 담은 Entity로 나눌 수 있다.
 - Data 계층에는 Repository가 있다.
