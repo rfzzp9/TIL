@@ -5,14 +5,14 @@
 
 
 - Activity 클래스는 6가지 콜백으로 이루어진 핵심 집합을 제공한다.
-- onCreate(), onStart(), onResume, onPause(), onStop(), onDestroy() 시스템은 활동이 새 상태로 전환될 때 각 콜백이 호출된다.
+- onCreate(), onStart(), onResume, onPause(), onStop(), onDestroy() 시스템은 활동이 새 상태로 전환될 때 각 콜백 메서드가 호출된다.
 ![image](https://github.com/user-attachments/assets/183a72f6-0d94-4b13-945b-e2bc1f8be464)
 
 
 ### 1-2. onCreate()
 
 
-- onCreate() 콜백은 먼저 활동을 생성할 때 실행되는 것으로, 필수적으로 구현해야 한다.
+- onCreate() 콜백은 먼저 활동을 생성할 때 실행되는 것으로, 필수로 구현해야 한다.
 - 전체 수명 주기 동안 한 번만 발생한다.
   - 멤버 변수 정의, UI 구성(setContentView, xml 레이아웃 파일 정의)
 - Activity 이전 저장 상태가 포함된 Bundle 객체인 savedInstanceState 매개변수를 반환한다.
