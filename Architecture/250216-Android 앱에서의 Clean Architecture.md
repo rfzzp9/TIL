@@ -87,7 +87,7 @@ fun main() {
 
 
 - Android 앱 Architecture에는 3가지 레이어가 존재하며 이들은 각각의 '책임'을 명확히 가진다.
-- UI Layer, Domain Layer, Data Layer로 구성된다.
+- 각 레이어는 UI Layer, Domain Layer, Data Layer로 구성된다.
 - 아래 다이어그램의 화살표는 클래스 간의 종속성을 나타낸다.
 ![image](https://github.com/user-attachments/assets/026bad3c-5682-452a-84d8-f5b2bebd79e3)
 1) UI Layer (Presentation Layer)
