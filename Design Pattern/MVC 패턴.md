@@ -1,9 +1,129 @@
 # 1. MVC 패턴
+<br>
+<br>
+
+## 1-1. Android에서 MVC 패턴의 흐름
+
+![](https://velog.velcdn.com/images/rfzzp9/post/8a2ae8d0-d608-4d6c-a80b-de21e6c4cdbf/image.png)
+➀ 사용자가 버튼을 누른다. (사용자가 앱의 UI 요소와 상호작용)
+➁ View가 사용자 입력을 Controller에게 전달한다.
+➂ Controller가 Model에 데이터 처리를 요청하고, Model이 응답을 검증한다.
+➃ Model이 데이터 처리 결과(응답)를 Controller에게 반환한다.
+➄ Controller가 결과에 따라 View를 업데이트한다.
+➅ 최종적으로 사용자가 업데이트된 화면을 통해 결과를 확인한다.
+
+> 다이어그램을 작성하며 느낀 점은 다음과 같다.
+- View와 Controller가 엄격히 분리되지 않는다.
+- View와 Controller가 하나의 Activity 안에 섞여 있기 때문에  ${\textsf{\color{#DD6565}스파게티 코드}}$가 될 것 같다. 
+- ${\textsf{\color{#DD6565}단일 책임의 원칙(SRP)에서 위반}}$된다.
+- ${\textsf{\color{#DD6565}유지보수, 단위 테스트가 어렵다.}}$
 
 
-### 1-1. MVC의 각각이 무엇인가?
 
 
-- Model : 데이터를 담당한다.
-- View : 실제 사용자가 보는 화면을 구성한다.
-- Controller : 사용자 입력을 받고 
+<br>
+
+## 1-2. MVC 구성요소
+
+
+### Model
+애플리케이션의 데이터와 비즈니스 로직을 포함한다.
+UI와 독립적인 구성요소이다.
+- Repository, DTO, Room, Retrofit 등
+
+
+### View
+화면에 보이는 모든 것과 사용자와의 상호작용을 담당한다.
+직접 로직을 다루지 않고, 사용자 입력을 받아 Controller에게 전달한다.
+- XML Layout 파일, UI 컴포넌트, Compose의 @Composable 함수
+
+
+### Controller
+View와 Model 사이의 "중개자" 역할을 하며, 애플리케이션 로직을 관리한다.
+View를 통해 사용자 입력에 반응하고, 사용자가 요청한 데이터를 제공한다.
+- Activity, Fragment 등
+
+<br>
+
+## 1-3. Android에 MVC를 도입하게 된 배경
+
+
+
+- 더 나은 아키텍처 패턴이 정립되기 전
+- 빠른 개발을 위한 직관적인 접근에서 출발
+- 러닝 커브가 낮음 (개발자들에게는 친숙한 패턴)
+
+
+<br>
+
+## 1-4. Android에서 MVC의 한계
+
+
+➀ Solid 원칙 중 SRP와 DIP를 위반한다.
+- 단일 책임의 원칙(Single Responsibility Principle)  위반
+Activity에서 UI 초기화, 네트워크 통신, 데이터 처리 등 여러 가지 책임을 가진다.
+결국 Massive View Controller 문제를 초래한다.
+```kotlin
+class MainActivity : AppCompatActivity() {
+    
+    // SRP 위반 : 하나의 클래스가 너무 많은 책임을 가짐
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        // UI 초기화 책임
+        initViews()
+        
+        // 네트워크 통신 책임
+        fetchData()
+        
+        // 데이터 처리 책임
+        processData()
+        
+    }
+    ...
+    
+```
+
+
+
+- 의존성 역전 원칙(Dependency Inversion Principle) 위반
+Controller인 Fragment는 FragmentFactory나 newInstance 방식으로 생성자 주입이 가능하지만
+Activity의 경우, 코드를 직접 new로 작성하지 않고 Android 시스템이 직접 인스턴스를 생성하기 때문에 아래와 같은 식의 생성자 주입이 불가하다.
+```kotlin
+class LoginActivity(private val apiService: ApiService) : AppCompatActivity()  // 불가능
+
+```
+
+<br>
+
+➁ 상태를 저장하고 복원하는 책임은 오로지 개발자 몫이다.
+- MVC에서는 View, Controller가 Activity 안에 뭉쳐 있어, ViewModel과 같은 안전하게 관리되는 별도 컴포넌트가 없다.
+- 상태 보존용 Model 객체를 사용할 수는 있겠지만, ViewModel처럼 생명주기에 맞춰 관리되진 않는다. 
+```kotlin
+object LoginModel {
+    var username: String = ""
+    var password: String = ""
+}
+```
+- 개발자 부담 증가를 야기하고, 코드 복잡성 증가, 저장 및 복원 로직을 빼먹거나 잘못 구현하는 등 실수할 가능성이 다분하다.
+- 결국 상태 관리에 과도하게 신경을 쓰게 되면서, 정작 비즈니스 로직에 집중하기가 힘들어진다.
+
+<br>
+
+➂ View와 Model의 결합도가 높아짐에 따라, 유지보수가 어려워진다.
+
+
+- 결국 Controller로 Model을 가져와서 구현하지만, 결국 View와 Controller는 코드적으로 같은 클래스에 있기에 View와 Model의 결합도가 높아진다
+- View와 비즈니스 로직이 코드 상에 너무 가까이 붙어 있어, 관심사 분리가 무너진다. 결국 하나의 수정이 여러 관심사를 건드릴 수 있다.
+- 로직이 UI 코드 안에 있어 단위 테스트하기 어려우며, Controller와 View가 한 덩어리라 재사용성이 떨어진다.
+
+<br>
+<br>
+
+#### 참고자료
+[안드로이드 MVC](https://brunch.co.kr/@mystoryg/170)
+[안드로이드에서의 MVC 패턴](https://velog.io/@sdhong0609/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C%EC%9D%98-MVC-%ED%8C%A8%ED%84%B4)
+[[아키텍처 패턴] MVC 패턴이란?](https://medium.com/@jang.wangsu/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4-mvc-%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80-1d74fac6e256)
+[Learn the Model-View-Controller Pattern](https://openclassrooms.com/en/courses/4661936-develop-your-first-android-application/4679186-learn-the-model-view-controller-pattern)
+[Android Architecture 패턴: MV 형제들, 옆에서 볼까 앞에서 볼까?](https://meetup.nhncloud.com/posts/342)
