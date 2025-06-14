@@ -1,17 +1,14 @@
-# 1. MVC 패턴
-<br>
-<br>
 
 ## 1-1. Android에서 MVC 패턴의 흐름
 
 ![](https://velog.velcdn.com/images/rfzzp9/post/8a2ae8d0-d608-4d6c-a80b-de21e6c4cdbf/image.png)
-➀ 사용자가 버튼을 누른다. (사용자가 앱의 UI 요소와 상호작용)
-➁ View가 사용자 입력을 Controller에게 전달한다.
-➂ Controller가 Model에 데이터 처리를 요청하고, Model이 응답을 검증한다.
-➃ Model이 데이터 처리 결과(응답)를 Controller에게 반환한다.
-➄ Controller가 결과에 따라 View를 업데이트한다.
-➅ 최종적으로 사용자가 업데이트된 화면을 통해 결과를 확인한다.
-
+➀ 사용자가 버튼을 누른다. (사용자가 앱의 UI 요소와 상호작용) <br>
+➁ View가 사용자 입력을 Controller에게 전달한다. <br>
+➂ Controller가 Model에 데이터 처리를 요청하고, Model이 응답을 검증한다.<br>
+➃ Model이 데이터 처리 결과(응답)를 Controller에게 반환한다.<br>
+➄ Controller가 결과에 따라 View를 업데이트한다.<br>
+➅ 최종적으로 사용자가 업데이트된 화면을 통해 결과를 확인한다.<br>
+<br>
 > 다이어그램을 작성하며 느낀 점은 다음과 같다.
 - View와 Controller가 엄격히 분리되지 않는다.
 - View와 Controller가 하나의 Activity 안에 섞여 있기 때문에  ${\textsf{\color{#DD6565}스파게티 코드}}$가 될 것 같다. 
@@ -122,8 +119,8 @@ object LoginModel {
 <br>
 
 #### 참고자료
-[안드로이드 MVC](https://brunch.co.kr/@mystoryg/170)
-[안드로이드에서의 MVC 패턴](https://velog.io/@sdhong0609/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C%EC%9D%98-MVC-%ED%8C%A8%ED%84%B4)
-[[아키텍처 패턴] MVC 패턴이란?](https://medium.com/@jang.wangsu/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4-mvc-%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80-1d74fac6e256)
+[안드로이드 MVC](https://brunch.co.kr/@mystoryg/170)  
+[안드로이드에서의 MVC 패턴](https://velog.io/@sdhong0609/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C%EC%9D%98-MVC-%ED%8C%A8%ED%84%B4)  
+[[아키텍처 패턴] MVC 패턴이란?](https://medium.com/@jang.wangsu/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4-mvc-%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80-1d74fac6e256) 
 [Learn the Model-View-Controller Pattern](https://openclassrooms.com/en/courses/4661936-develop-your-first-android-application/4679186-learn-the-model-view-controller-pattern)
-[Android Architecture 패턴: MV 형제들, 옆에서 볼까 앞에서 볼까?](https://meetup.nhncloud.com/posts/342)
+[Android Architecture 패턴: MV 형제들, 옆에서 볼까 앞에서 볼까?](https://meetup.nhncloud.com/posts/342)  
