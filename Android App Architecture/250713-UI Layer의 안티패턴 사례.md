@@ -86,7 +86,7 @@ class ProductViewModel : ViewModel() {
 
 
 ✅ 권장하는 방법
-- Cold Flow를 사용한 지연 초기화를 권장하고 있다.
+- Cold Flow를 사용한 지연 초기화를 권장하고 있다. 방법은 아래와 같다.
 1. Repository에서 Cold Flow 생성
 ```kotlin
 class ProductRepository {
@@ -141,10 +141,11 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel()) {
 2-2. 5_000은 어디서 온 숫자인가?
 
 - 실제로 화면 터치, 키 누르기 등 이벤트에 5초 안에 응답하지 않으면 ANR이 트리거 된다.
+  ANR의 기한이 5초이다.
 - 따라서 마지막 구독자가 5초 이상 사라지면 이미 타임아웃이며, 데이터 Flow가 더이상 UI에 영향을 줄 수 없다.
 
 
-2-3. 이 방법의 장점
+2-3. 이 방법을 사용했을 시 장점
 
 - 실제로 필요할 때만 데이터를 로딩한다. (지연 초기화)
 - UI가 보일 때만 활성화된다.
