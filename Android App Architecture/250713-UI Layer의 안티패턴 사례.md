@@ -150,3 +150,15 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel()) {
 - UI가 보일 때만 활성화된다.
 - 불필요한 호출을 방지한다.
 - Configuration Change에도 물론 안전하다.
+
+
+<br>
+<br>
+<br>
+
+
+[참고자료] <br>
+
+[[Android] 초기 데이터 로드 : LaunchedEffect vs ViewModel](https://onlyfor-me-blog.tistory.com/1095) <br>
+[Google 공식문서 - UI Layer](https://developer.android.com/topic/architecture/ui-layer?hl=ko)
+
