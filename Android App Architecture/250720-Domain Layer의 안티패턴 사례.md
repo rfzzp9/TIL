@@ -145,44 +145,24 @@ class LogoutUseCase(
 
 - 개선 방법 <br>
 ```kotlin
-// 공통 책임을 별도 서비스로 분리
-interface SessionManager {
-    suspend fun clearSession()
-    suspend fun createSession(userId: String, token: String)
-    suspend fun getCurrentSession(): Session?
-    suspend fun isValidSession(): Boolean
-}
-
 class LoginUseCase(
-    private val authRepository: AuthRepository,
-    private val sessionManager: SessionManager
+    private val clearSessionUseCase: ClearSessionUseCase,    // Low Level
+    private val authenticateUseCase: AuthenticateUseCase     // Low Level
 ) {
     suspend operator fun invoke(email: String, password: String): LoginResult {
-        // 기존 세션 정리
-        sessionManager.clearSession()
-        
-        return try {
-            val authResult = authRepository.login(email, password)
-            sessionManager.createSession(authResult.userId, authResult.token)
-            LoginResult.Success(authResult.user)
-        } catch (e: AuthException) {
-            LoginResult.Failed(e.message)
-        }
+        clearSessionUseCase()  // 세션 정리
+        val result = authenticateUseCase(email, password)  // 인증
+        return LoginResult.Success(result.user)
     }
 }
 
 class LogoutUseCase(
-    private val authRepository: AuthRepository,
-    private val sessionManager: SessionManager
+    private val requestLogoutUseCase: RequestLogoutUseCase,  // Low Level
+    private val clearSessionUseCase: ClearSessionUseCase     // Low Level
 ) {
-    suspend operator fun invoke(): LogoutResult {
-        return try {
-            authRepository.logout()
-            sessionManager.clearSession()
-            LogoutResult.Success
-        } catch (e: Exception) {
-            LogoutResult.Failed(e.message ?: "Logout failed")
-        }
+    suspend operator fun invoke() {
+        requestLogoutUseCase()  // 로그아웃 요청
+        clearSessionUseCase()   // 세션 정리
     }
 }
 ```
