@@ -144,4 +144,66 @@ class LogoutUseCase(
 
 
 - 개선 방법 <br>
-  UseCase간 서로 참조 상태를 가진다.
+```kotlin
+// 공통 책임을 별도 서비스로 분리
+interface SessionManager {
+    suspend fun clearSession()
+    suspend fun createSession(userId: String, token: String)
+    suspend fun getCurrentSession(): Session?
+    suspend fun isValidSession(): Boolean
+}
+
+class LoginUseCase(
+    private val authRepository: AuthRepository,
+    private val sessionManager: SessionManager
+) {
+    suspend operator fun invoke(email: String, password: String): LoginResult {
+        // 기존 세션 정리
+        sessionManager.clearSession()
+        
+        return try {
+            val authResult = authRepository.login(email, password)
+            sessionManager.createSession(authResult.userId, authResult.token)
+            LoginResult.Success(authResult.user)
+        } catch (e: AuthException) {
+            LoginResult.Failed(e.message)
+        }
+    }
+}
+
+class LogoutUseCase(
+    private val authRepository: AuthRepository,
+    private val sessionManager: SessionManager
+) {
+    suspend operator fun invoke(): LogoutResult {
+        return try {
+            authRepository.logout()
+            sessionManager.clearSession()
+            LogoutResult.Success
+        } catch (e: Exception) {
+            LogoutResult.Failed(e.message ?: "Logout failed")
+        }
+    }
+}
+```
+
+<br>
+<br>
+
+> Google App Architecture의 Domain Layer
+> - (단순함 추구) 복잡하지 않다면 UseCase를 사용하지 않는다.
+> - (점진적 복잡성) 필요할 때만 레이어를 추가한다.
+> - (실용적인 접근) 완벽한 분리보다는 유지보수성을 우선시한다.
+> - (테스트) 의존성 주입과 추상화를 활용해 테스트 가능성을 높인다.
+
+
+<br>
+<br>
+<br>
+<br>
+
+[참고 자료]
+
+[[DroidKnights 2023] 박종혁 - 빈혈(anemic) 도메인 모델과 쓸모없는 유스케이스 그리고 비대한(Bloated) 뷰모델에 대해 생각해보기](https://www.youtube.com/watch?v=3mR8_vT7m1U) <br>
+[[Android] Clean Architecture 를 도입하며](https://vagabond95.me/posts/clean-architecture-1/) <br>
+[안드로이드 클린 아키텍처 도메인 레이어 설계](https://chanho-study.tistory.com/116)
